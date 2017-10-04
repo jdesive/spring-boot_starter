@@ -1,17 +1,19 @@
 package com.desive.starter;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
-public class StarterApplication extends SpringApplication{
-
-	public StarterApplication(final Class<?> clazz) {
-		super(clazz);
-	}
+@SpringBootApplication
+public class StarterApplication{
 
 	public static void main(String[] args) {
-		new StarterApplication(AppConfig.class).run(args);
+		SpringApplication.run(StarterApplication.class, args);
 	}
 
 }

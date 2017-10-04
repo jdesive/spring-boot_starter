@@ -1,14 +1,17 @@
 package com.desive.starter.repositories;
 
-import java.util.Optional;
-
 import com.desive.starter.entities.User;
-import com.desive.starter.support.jpa.CustomJpaRepository;
-import org.springframework.stereotype.Repository;
+import com.desive.starter.repositories.interfaces.IUserRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Repository
-public interface UserRepository extends CustomJpaRepository<User, Integer> {
+/*
+ The users repository JPA query methods
 
-	Optional<User> findByUsername(String username);
+ Created by Jack DeSive on 10/3/2017 at 3:17 AM
+*/
+public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User>, IUserRepository{
+
+    User findByUsername(String username);
 
 }

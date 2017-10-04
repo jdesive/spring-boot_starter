@@ -1,29 +1,21 @@
 package com.desive.starter.entities;
 
-// @formatter:off
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@EqualsAndHashCode(of = { "username", "roles", "enabled" })
-@ToString(of = { "id", "username" })
+import javax.persistence.*;
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
+@ToString(of = { "id", "username" })
+@EqualsAndHashCode(of = { "username", "enabled" })
+/*
+ Represents the users table
+
+ Created by Jack DeSive on 10/3/2017 at 3:17 AM
+*/
 public class User {
 
 	public static final int MAX_LENGTH_USERNAME = 30;
@@ -38,40 +30,25 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 
-	private boolean enabled;
-	private LocalDateTime creationTime;
-	private LocalDateTime modificationTime;
+	private Boolean enabled;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Role> roles = new HashSet<Role>();
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
+	private Date creationTime;
+
+	@DateTimeFormat(pattern = "MM-dd-yyyy")
+	private Date modificationTime;
 
 	public User() {
 	}
 
-	/**
-	 * Constructor used exclusively by {@link com.desive.starter.support.security.CustomUserDetails}}
-	 *
-	 * @param user
-	 */
-	public User(final User user) {
-		this.id = user.id;
-		this.username = user.username;
-		this.password = user.password;
-		this.enabled = user.enabled;
-	}
-
 	@PrePersist
 	public void prePersist() {
-		creationTime = LocalDateTime.now();
+		creationTime = new Date(System.currentTimeMillis());
 	}
 
 	@PreUpdate
 	public void preUpdate() {
-		modificationTime = LocalDateTime.now();
-	}
-
-	public static int getMaxLengthUsername() {
-		return MAX_LENGTH_USERNAME;
+		modificationTime = new Date(System.currentTimeMillis());
 	}
 
 	public Integer getId() {
@@ -98,7 +75,7 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isEnabled() {
+	public Boolean getEnabled() {
 		return enabled;
 	}
 
@@ -106,27 +83,20 @@ public class User {
 		this.enabled = enabled;
 	}
 
-	public LocalDateTime getCreationTime() {
+	public Date getCreationTime() {
 		return creationTime;
 	}
 
-	public void setCreationTime(LocalDateTime creationTime) {
+	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
 	}
 
-	public LocalDateTime getModificationTime() {
+	public Date getModificationTime() {
 		return modificationTime;
 	}
 
-	public void setModificationTime(LocalDateTime modificationTime) {
+	public void setModificationTime(Date modificationTime) {
 		this.modificationTime = modificationTime;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
 }
