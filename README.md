@@ -23,7 +23,7 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 *If you are pushing to a docker repo you can use `sudo ./mvnw docker:push` to push*
 
 ## API Documentation
-Goto `http://localhost:8080/swagger-ui.html` once you have started the application to view the swagger documentation.
+Goto [**`http://localhost:8080/swagger-ui.html`**](http://localhost:8080/swagger-ui.html) once you have started the application to view the swagger documentation.
 
 ## Maven Dependencies
 * [Jackson-core](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.9.1)
