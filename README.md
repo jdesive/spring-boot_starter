@@ -6,6 +6,9 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 * In-memory database for tests
 * Specification JPA repositories
 * Mockito and MockMvc for testing
+* External PostgreSQL database
+* Swagger API documentation 
+* Automated Dockerization with docker-maven-plugin
 
 ## How to start
 ### Local
@@ -18,6 +21,10 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 2. Run `docker run -p "8080:8080" spring-boot-starter` to start the app in docker. 
 
 *If you are pushing to a docker repo you can use `sudo ./mvnw docker:push` to push*
+
+## API Documentation
+Goto `http://localhost:8080/swagger-ui.html` once you have started the application to view the swagger documentation.
+
 ## Maven Dependencies
 * [Jackson-core](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core/2.9.1)
 * [Guava](https://mvnrepository.com/artifact/com.google.guava/guava/23.0)
@@ -30,3 +37,4 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 * [Liquibase](https://mvnrepository.com/artifact/org.liquibase/liquibase-core/3.5.3)
 * [PostgreSQL](https://mvnrepository.com/artifact/postgresql/postgresql/9.1-901-1.jdbc4)
 * [Lombok](https://mvnrepository.com/artifact/org.projectlombok/lombok)
+* [Swagger](https://mvnrepository.com/artifact/io.springfox)
