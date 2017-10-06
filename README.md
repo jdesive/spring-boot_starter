@@ -18,9 +18,18 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 
 ### Docker
 1. Run the `sudo ./mvnw package docker:build` script to install the app and build a local docker image
-2. Run `docker run -p "8080:8080" spring-boot-starter` to start the app in docker. 
+2. Run `docker run -d -p "8080:8080" spring-boot-starter` to start the app in docker. 
 
 *If you are pushing to a docker repo you can use `sudo ./mvnw docker:push` to push*
+
+#### Environment Variables
+* **DATABASE_URL** - `jdbc:postgresql://192.168.68.22:5432`
+* **DATABASE_NAME** - `starter`
+* **DATABASE_USER** - `postgres`
+* **DATABASE_PASS** - `postgres`
+* **DATABASE_PLATFORM** - `org.hibernate.dialect.PostgreSQLDialect`
+* **SQL** - `true`
+* **LIQUIBASE** - `true`
 
 ## API Documentation
 Goto [**`http://localhost:8080/swagger-ui.html`**](http://localhost:8080/swagger-ui.html) once you have started the application to view the swagger documentation.
