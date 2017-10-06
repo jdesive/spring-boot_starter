@@ -106,7 +106,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/signup")
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .content(mapper.writeValueAsBytes(user)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string(mapper.writeValueAsString(user)));
     }
 
