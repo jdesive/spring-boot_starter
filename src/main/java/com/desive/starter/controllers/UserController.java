@@ -26,12 +26,14 @@ import com.desive.starter.exceptions.UserNotFoundException;
 import com.desive.starter.repositories.UserRepository;
 import com.desive.starter.repositories.criteria.UserSearchCriteria;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 public class UserController {
 
@@ -44,13 +46,17 @@ public class UserController {
 										  @RequestParam(name = "id", required = false) Integer userid,
 										  @RequestParam(name = "username", required = false) String username,
 										  @RequestParam(name = "enabled", required = false) Boolean enabled) {
-		return userRepository.findByCriteria(new UserSearchCriteria(userid, username, enabled), new PageRequest(page, size));
+        log.debug("Building user search criteria...");
+        UserSearchCriteria criteria = new UserSearchCriteria(userid, username, enabled);
+        log.debug("Searching users db with {}...", criteria.toString());
+		return userRepository.findByCriteria(criteria, new PageRequest(page, size));
 	}
 
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(tags = {"Users"}, value = "Sign Up to get credentials", nickname = "Sign Up", produces = "applications/json")
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public User registerUser(@RequestBody User user){
+        log.debug("Saving {} to users db...", user.toString());
 	    return userRepository.save(user);
     }
 
@@ -58,13 +64,14 @@ public class UserController {
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public Boolean userSignin(@RequestBody UserSignin userSignin){
 
+        log.debug("Searching for user with username \'{}\' in users db...", userSignin.getUsername());
         User user = userRepository.findByUsername(userSignin.getUsername());
         if(user == null)
             throw new UserNotFoundException(userSignin.getUsername());
 
         if(!user.getPassword().equals(userSignin.getPassword()))
             throw new IncorrectPasswordException(userSignin.getUsername());
-
+        log.debug("Sign in successful for user \'{}\'...", userSignin.getUsername());
         return true;
     }
 

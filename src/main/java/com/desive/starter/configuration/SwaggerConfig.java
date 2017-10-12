@@ -19,6 +19,7 @@
 
 package com.desive.starter.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -35,12 +36,14 @@ import static springfox.documentation.builders.PathSelectors.any;
 /*
  Created by Jack DeSive on 10/4/2017 at 8:54 PM
 */
+@Slf4j
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
     @Bean
     public Docket produceApi() {
+        log.debug("Building swagger docket...");
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.desive.starter.controllers"))
@@ -50,6 +53,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
+        log.debug("Building swagger api info...");
         ApiInfo apiInfo = new ApiInfo(
                 "Spring Boot Starter",
                 "Starter project for Spring Boot",
