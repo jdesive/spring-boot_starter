@@ -38,18 +38,18 @@
 	</parent>
 
 	<properties>
+        <global.finalName>spring-boot-starter</global.finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.directory>target/</project.build.directory>
+
 		<java.version>1.8</java.version>
         <jackson.version>2.9.1</jackson.version>
         <swagger.version>2.7.0</swagger.version>
         <guava.version>23.0</guava.version>
         <postgres.version>9.1-901-1.jdbc4</postgres.version>
         <liquibase.version>3.5.3</liquibase.version>
-        <docker.plugin.version>0.4.13</docker.plugin.version>
-        <project.build.directory>target/</project.build.directory>
-        <project.build.finalName>spring-boot-starter</project.build.finalName>
-        <docker.image.name>spring-boot-starter</docker.image.name>
+        <docker.plugin.version>1.3.6</docker.plugin.version>
         <!--<docker.image.repo>your repo here</docker.image.repo>    Use for repo-->
 	</properties>
 
@@ -126,6 +126,7 @@
 	</dependencies>
 
 	<build>
+        <finalName>${global.finalName}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -138,20 +139,24 @@
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>${docker.plugin.version}</version>
+                <!-- Uncomment to bind build to package and push to deploy -->
+                <!--<executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>-->
                 <configuration>
-                    <skipDockerBuild>false</skipDockerBuild>
-                    <!--<imageName>${docker.image.repo}/${docker.image.name}</imageName>   Use for repo-->
-                    <imageName>${docker.image.name}</imageName>
-                    <dockerDirectory>${basedir}</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
+                    <!--<repository>${docker.image.repo}</repository> Use for repo-->
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${global.finalName}.jar</JAR_FILE>
+                    </buildArgs>
                 </configuration>
             </plugin>
 		</plugins>

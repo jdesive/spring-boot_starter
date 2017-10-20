@@ -8,7 +8,7 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 * Mockito and MockMvc for testing
 * External PostgreSQL database
 * Swagger API documentation 
-* Automated Dockerization with docker-maven-plugin
+* Automated Dockerization with dockerfile-maven-plugin
 
 ## How to start
 ### Local
@@ -17,10 +17,10 @@ This project was modeled after a creation made using [spring.io](http://start.sp
 3. Open your browser and goto [**`localhost:8080/users`**](http://localhost:8080/users)
 
 ### Docker
-1. Run the `sudo ./mvnw package docker:build` script to install the app and build a local docker image
+1. Run the `sudo ./mvnw package dockerfile:build` script to install the app and build a local docker image
 2. Run `docker run -d -p "8080:8080" spring-boot-starter` to start the app in docker. 
 
-*If you are pushing to a docker repo you can use `sudo ./mvnw docker:push` to push*
+*If you are pushing to a docker repo you can use `sudo ./mvnw dockerfile:push` to push*
 
 #### Environment Variables
 * **DATABASE_URL** - `jdbc:postgresql://192.168.68.22:5432`
